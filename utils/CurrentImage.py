@@ -8,7 +8,7 @@ class CurrentImage:
         
         self.available_labels = get_labels()
 
-        self.df = pd.read_csv("./labels.csv")
+        self.df = pd.read_csv("./annotations.csv")
 
         # dynamic variables
         self.current_index = 0
@@ -44,11 +44,11 @@ class CurrentImage:
         index_current_path = self.df["id"] == self.image_name
         if index_current_path.sum() == 1:
             self.df.loc[index_current_path, "label"] = new_label
-            self.df.to_csv("./labels.csv")
+            self.df.to_csv("./annotations.csv")
         elif index_current_path.sum() == 0:
             self.df.loc[len(self.df)] = {"id":self.image_name, "label":new_label}
         else:
             print("Houston we've got a problem")
             print(self.df.loc[index_current_path, :])
-        self.df.to_csv("./labels.csv", index = False)
+        self.df.to_csv("./annotations.csv", index = False)
         self.update()
